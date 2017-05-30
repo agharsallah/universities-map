@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Marker, Popup, TileLayer } from 'react-leaflet';
 import Chart from "./Chart";
+import MarkerClusterGroup from 'react-leaflet-markercluster';
 
 class Markers extends Component {
     constructor(props){
@@ -61,7 +62,8 @@ class Markers extends Component {
         const biotech = L.icon({iconUrl: 'http://localhost:8080/img/pines.svg',iconSize: [40, 40],iconAnchor: [20, 20]});
         const literature = L.icon({iconUrl: 'http://localhost:8080/img/open-book.svg',iconSize: [40, 40],iconAnchor: [20, 20]});
 
-        var rows = [];
+        var rows = [];            var markers = []
+
         for (var i = 0; i < markerData.length; i++) {
             var latLon = markerData[i].lonlat;
             let lat=latLon.split(",")[0]
@@ -70,19 +72,19 @@ class Markers extends Component {
             var name =markerData[i].nom_de_universite
             var affectedmarker;
             if((chosenMarker=="economy")&&(type=="economy")) {
-                  rows.push(<Marker position={[lat, long]} icon={economy} key={i}><Popup ><p>{name}</p></Popup></Marker>)
+                   markers.push({lat:lat,lng:long,options:{icon:economy}}  )  
                 }else if((chosenMarker=="literature")&&(type=="literature")){
-                  rows.push(<Marker position={[lat, long]} icon={literature} key={i}><Popup ><p>{name}</p></Popup></Marker>)
+                   markers.push({lat:lat,lng:long,options:{icon:literature}}  )  
                 }else if((chosenMarker=="tourism")&&(type=="tourism")){
-                  rows.push(<Marker position={[lat, long]} icon={tourism} key={i}><Popup ><p>{name}</p></Popup></Marker>)
+                   markers.push({lat:lat,lng:long,options:{icon:tourism}}  )  
                 }else if((chosenMarker=="technology")&&(type=="technology")){
-                  rows.push(<Marker position={[lat, long]} icon={technology} key={i}><Popup ><p>{name}</p></Popup></Marker>)
+                   markers.push({lat:lat,lng:long,options:{icon:technology}}  )  
                 }else if((chosenMarker=="medical")&&(type=="medical")){
-                  rows.push(<Marker position={[lat, long]} icon={medical} key={i}><Popup ><p>{name}</p></Popup></Marker>)
+                   markers.push({lat:lat,lng:long,options:{icon:medical}}  )  
                 }else if((chosenMarker=="droit")&&(type=="droit")){
-                  rows.push(<Marker position={[lat, long]} icon={droit} key={i}><Popup ><p>{name}</p></Popup></Marker>)
+                   markers.push({lat:lat,lng:long,options:{icon:droit}}  )  
                 }else if((chosenMarker=="biotech")&&(type=="biotech")){
-                  rows.push(<Marker position={[lat, long]} icon={biotech} key={i}><Popup ><p>{name}</p></Popup></Marker>)
+                   markers.push({lat:lat,lng:long,options:{icon:biotech}}  )  
                 }else if(chosenMarker=="all"){
                      if(type=="economy") affectedmarker=economy
                       else if(type=="literature") affectedmarker=literature
@@ -91,10 +93,13 @@ class Markers extends Component {
                       else if(type=="medical") affectedmarker=medical
                       else if(type=="droit") affectedmarker=droit
                       else if(type=="biotech") affectedmarker=biotech
-                     rows.push(<Marker position={[lat, long]} icon={affectedmarker} key={i}><Popup ><div>{name}</div></Popup></Marker>)
+                   markers.push({lat:lat,lng:long,options:{icon:affectedmarker}}  )  
                 }
 
         }
+                      console.log(markers);
+                          rows.push(<MarkerClusterGroup markers={markers} wrapperOptions={{enableDefaultStyle: true}}/>)
+
         this.setState({markers:rows});
         console.log(rows)
     }
