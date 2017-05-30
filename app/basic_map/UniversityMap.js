@@ -54,16 +54,7 @@ class UniversityMap extends Component {
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                     />
                     <Markers selectedMarkers={this.props.selectedMarker}/>
-                    <GeoJSON data= {G_districts}   
-                            style={this.style.bind(this)}    
-                            onEachFeature={
-                                (feature, layer) => {
-                                    layer.bindPopup(feature.properties.name_en);
-                                    layer.on({mouseover: this.highlightFeature.bind(this)});
-                                    layer.on({mouseout: this.resetFeature.bind(this)});
-                                }
-                            }
-                    />
+                    
                 </Map>
 
         );
