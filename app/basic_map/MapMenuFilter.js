@@ -21,6 +21,7 @@ class MapMenuFilter extends Component {
                     <MenuItem value={"medical"} primaryText="médicale et paramédicale" />
                     <MenuItem value={"droit"} primaryText="droit et sciences juridiques" />
                     <MenuItem value={"biotech"} primaryText="agriculture,biotechnologie et environnement" />
+                    <MenuItem value={"ingenierie"} primaryText="ingenierie" />
                 </DropDownMenu>  
         );
     }

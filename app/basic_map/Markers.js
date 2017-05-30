@@ -23,6 +23,7 @@ class Markers extends Component {
         const droit = L.icon({iconUrl: 'http://localhost:8080/img/mortarboard.svg',iconSize: [40, 40],iconAnchor: [20, 20]});
         const biotech = L.icon({iconUrl: 'http://localhost:8080/img/pines.svg',iconSize: [40, 40],iconAnchor: [20, 20]});
         const literature = L.icon({iconUrl: 'http://localhost:8080/img/open-book.svg',iconSize: [40, 40],iconAnchor: [20, 20]});
+        const ingenierie = L.icon({iconUrl: 'http://localhost:8080/img/set-square.svg',iconSize: [40, 40],iconAnchor: [20, 20]});
 
         var rows = [];
         for (var i = 0; i < markerData.length; i++) {
@@ -39,6 +40,7 @@ class Markers extends Component {
             else if(type=="medical") affectedmarker=medical
             else if(type=="droit") affectedmarker=droit
             else if(type=="biotech") affectedmarker=biotech
+            else if(type=="ingenierie") affectedmarker=ingenierie
               rows.push(<Marker position={[lat, long]} icon={affectedmarker} key={i}><Popup ><div>{name}</div></Popup></Marker>)
 
         }
@@ -61,6 +63,7 @@ class Markers extends Component {
         const droit = L.icon({iconUrl: 'http://localhost:8080/img/mortarboard.svg',iconSize: [40, 40],iconAnchor: [20, 20]});
         const biotech = L.icon({iconUrl: 'http://localhost:8080/img/pines.svg',iconSize: [40, 40],iconAnchor: [20, 20]});
         const literature = L.icon({iconUrl: 'http://localhost:8080/img/open-book.svg',iconSize: [40, 40],iconAnchor: [20, 20]});
+        const ingenierie = L.icon({iconUrl: 'http://localhost:8080/img/set-square.svg',iconSize: [40, 40],iconAnchor: [20, 20]});
 
         var rows = [];            var markers = []
 
@@ -72,19 +75,21 @@ class Markers extends Component {
             var name =markerData[i].nom_de_universite
             var affectedmarker;
             if((chosenMarker=="economy")&&(type=="economy")) {
-                   markers.push({lat:lat,lng:long,options:{icon:economy}}  )  
+                   markers.push({lat:lat,lng:long,options:{icon:economy,title:name},popup:name}  )  
                 }else if((chosenMarker=="literature")&&(type=="literature")){
-                   markers.push({lat:lat,lng:long,options:{icon:literature}}  )  
+                   markers.push({lat:lat,lng:long,options:{icon:literature,title:name},popup:name}  )  
                 }else if((chosenMarker=="tourism")&&(type=="tourism")){
-                   markers.push({lat:lat,lng:long,options:{icon:tourism}}  )  
+                   markers.push({lat:lat,lng:long,options:{icon:tourism,title:name},popup:name}  )  
                 }else if((chosenMarker=="technology")&&(type=="technology")){
-                   markers.push({lat:lat,lng:long,options:{icon:technology}}  )  
+                   markers.push({lat:lat,lng:long,options:{icon:technology,title:name},popup:name}  )  
                 }else if((chosenMarker=="medical")&&(type=="medical")){
-                   markers.push({lat:lat,lng:long,options:{icon:medical}}  )  
+                   markers.push({lat:lat,lng:long,options:{icon:medical,title:name},popup:name}  )  
                 }else if((chosenMarker=="droit")&&(type=="droit")){
-                   markers.push({lat:lat,lng:long,options:{icon:droit}}  )  
+                   markers.push({lat:lat,lng:long,options:{icon:droit,title:name},popup:name}  )  
                 }else if((chosenMarker=="biotech")&&(type=="biotech")){
-                   markers.push({lat:lat,lng:long,options:{icon:biotech}}  )  
+                   markers.push({lat:lat,lng:long,options:{icon:biotech,title:name},popup:name}  )  
+                }else if((chosenMarker=="ingenierie")&&(type=="ingenierie")){
+                   markers.push({lat:lat,lng:long,options:{icon:ingenierie,title:name},popup:name}  )  
                 }else if(chosenMarker=="all"){
                      if(type=="economy") affectedmarker=economy
                       else if(type=="literature") affectedmarker=literature
@@ -93,7 +98,7 @@ class Markers extends Component {
                       else if(type=="medical") affectedmarker=medical
                       else if(type=="droit") affectedmarker=droit
                       else if(type=="biotech") affectedmarker=biotech
-                   markers.push({lat:lat,lng:long,options:{icon:affectedmarker}}  )  
+                   markers.push({lat:lat,lng:long,options:{icon:affectedmarker,title:name},popup:name}  )  
                 }
 
         }
