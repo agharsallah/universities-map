@@ -1,8 +1,14 @@
 import React, { Component } from 'react';
 import { Marker, Popup, TileLayer } from 'react-leaflet';
-import Chart from "./Chart";
 import MarkerClusterGroup from 'react-leaflet-markercluster';
-
+const economy = L.icon({iconUrl: 'http://localhost:8080/img/money.svg',iconSize: [40, 40],iconAnchor: [20, 20]});
+const tourism = L.icon({iconUrl: 'http://localhost:8080/img/school-material.svg',iconSize: [40, 40],iconAnchor: [20, 20]});
+const technology = L.icon({iconUrl: 'http://localhost:8080/img/computer.svg',iconSize: [40, 40],iconAnchor: [20, 20]});
+const medical = L.icon({iconUrl: 'http://localhost:8080/img/microscope.svg',iconSize: [40, 40],iconAnchor: [20, 20]});
+const droit = L.icon({iconUrl: 'http://localhost:8080/img/mortarboard.svg',iconSize: [40, 40],iconAnchor: [20, 20]});
+const biotech = L.icon({iconUrl: 'http://localhost:8080/img/pines.svg',iconSize: [40, 40],iconAnchor: [20, 20]});
+const literature = L.icon({iconUrl: 'http://localhost:8080/img/open-book.svg',iconSize: [40, 40],iconAnchor: [20, 20]});
+const ingenierie = L.icon({iconUrl: 'http://localhost:8080/img/set-square.svg',iconSize: [40, 40],iconAnchor: [20, 20]});
 class Markers extends Component {
     constructor(props){
         super(props);
@@ -11,28 +17,15 @@ class Markers extends Component {
     componentDidMount() {
         const markerData=G_univ_location;
         const allmarkers = [[36.955360, 8.749795,"municipal"],[36.9551, 8.789795,"party"],[36.94360, 8.749795,"municipal"],[36.955360, 8.89795,"party"]]
-        const municipal = L.icon({
-            iconUrl: 'http://localhost:8080/img/mortarboard.svg',
-            iconSize: [40, 40],
-            iconAnchor: [20, 20]
-        });
-        const economy = L.icon({iconUrl: 'http://localhost:8080/img/money.svg',iconSize: [40, 40],iconAnchor: [20, 20]});
-        const tourism = L.icon({iconUrl: 'http://localhost:8080/img/school-material.svg',iconSize: [40, 40],iconAnchor: [20, 20]});
-        const technology = L.icon({iconUrl: 'http://localhost:8080/img/computer.svg',iconSize: [40, 40],iconAnchor: [20, 20]});
-        const medical = L.icon({iconUrl: 'http://localhost:8080/img/microscope.svg',iconSize: [40, 40],iconAnchor: [20, 20]});
-        const droit = L.icon({iconUrl: 'http://localhost:8080/img/mortarboard.svg',iconSize: [40, 40],iconAnchor: [20, 20]});
-        const biotech = L.icon({iconUrl: 'http://localhost:8080/img/pines.svg',iconSize: [40, 40],iconAnchor: [20, 20]});
-        const literature = L.icon({iconUrl: 'http://localhost:8080/img/open-book.svg',iconSize: [40, 40],iconAnchor: [20, 20]});
-        const ingenierie = L.icon({iconUrl: 'http://localhost:8080/img/set-square.svg',iconSize: [40, 40],iconAnchor: [20, 20]});
-
-        var rows = [];
-        for (var i = 0; i < markerData.length; i++) {
-            var latLon = markerData[i].lonlat;
+        let rows = [];
+        let markers = []
+        for (let i = 0; i < markerData.length; i++) {
+            let latLon = markerData[i].lonlat;
             let lat=latLon.split(",")[0]
             let long=latLon.split(",")[1]
-            var type=markerData[i].Section;
-            var name =markerData[i].nom_de_universite
-            var affectedmarker;
+            let type=markerData[i].Section;
+            let name =markerData[i].nom_de_universite
+            let affectedmarker;
             if(type=="economy") affectedmarker=economy
             else if(type=="literature") affectedmarker=literature
             else if(type=="tourism") affectedmarker=tourism
@@ -41,31 +34,19 @@ class Markers extends Component {
             else if(type=="droit") affectedmarker=droit
             else if(type=="biotech") affectedmarker=biotech
             else if(type=="ingenierie") affectedmarker=ingenierie
-              rows.push(<Marker position={[lat, long]} icon={affectedmarker} key={i}><Popup ><div>{name}</div></Popup></Marker>)
+             markers.push({lat:lat,lng:long,options:{icon:affectedmarker,title:name},popup:name}  )  
 
         }
+        rows.push(<MarkerClusterGroup markers={markers} wrapperOptions={{enableDefaultStyle: true}}/>)
         this.setState({markers:rows});
-                console.log(rows)
 
     }
     componentWillReceiveProps(nextProps) {
         const markerData=G_univ_location;
         const chosenMarker = nextProps.selectedMarkers;
-        const general = L.icon({
-            iconUrl: 'http://localhost:8080/img/mortarboard.svg',
-            iconSize: [40, 40],
-            iconAnchor: [20, 20]
-        });
-        const economy = L.icon({iconUrl: 'http://localhost:8080/img/money.svg',iconSize: [40, 40],iconAnchor: [20, 20]});
-        const tourism = L.icon({iconUrl: 'http://localhost:8080/img/school-material.svg',iconSize: [40, 40],iconAnchor: [20, 20]});
-        const technology = L.icon({iconUrl: 'http://localhost:8080/img/computer.svg',iconSize: [40, 40],iconAnchor: [20, 20]});
-        const medical = L.icon({iconUrl: 'http://localhost:8080/img/microscope.svg',iconSize: [40, 40],iconAnchor: [20, 20]});
-        const droit = L.icon({iconUrl: 'http://localhost:8080/img/mortarboard.svg',iconSize: [40, 40],iconAnchor: [20, 20]});
-        const biotech = L.icon({iconUrl: 'http://localhost:8080/img/pines.svg',iconSize: [40, 40],iconAnchor: [20, 20]});
-        const literature = L.icon({iconUrl: 'http://localhost:8080/img/open-book.svg',iconSize: [40, 40],iconAnchor: [20, 20]});
-        const ingenierie = L.icon({iconUrl: 'http://localhost:8080/img/set-square.svg',iconSize: [40, 40],iconAnchor: [20, 20]});
-
-        var rows = [];            var markers = []
+        const general = L.icon({iconUrl: 'http://localhost:8080/img/mortarboard.svg',iconSize: [40, 40],iconAnchor: [20, 20]});
+        var rows = [];
+        var markers = []
 
         for (var i = 0; i < markerData.length; i++) {
             var latLon = markerData[i].lonlat;
@@ -102,11 +83,8 @@ class Markers extends Component {
                 }
 
         }
-                      console.log(markers);
-                          rows.push(<MarkerClusterGroup markers={markers} wrapperOptions={{enableDefaultStyle: true}}/>)
-
+        rows.push(<MarkerClusterGroup markers={markers} wrapperOptions={{enableDefaultStyle: true}}/>)
         this.setState({markers:rows});
-        console.log(rows)
     }
     
     

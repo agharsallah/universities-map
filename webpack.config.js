@@ -1,12 +1,13 @@
 var webpack = require('webpack');
+var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+var CompressionPlugin = require("compression-webpack-plugin");
 
 /*
  * Default webpack configuration for development
  */
-var Autoprefixer = require('less-plugin-autoprefix');
 
 var config = {
-  devtool: 'eval-source-map',
+  devtool: 'cheap-module-source-map',
   entry:  __dirname + "/app/index.js",
   output: {
     path: __dirname + "/public",
@@ -34,24 +35,42 @@ var config = {
       query: {
         presets: ['es2015','react']
       }
-    },
-    { test: /\.less/, loader: 'style-loader!css-loader!postcss-loader!less-loader', exclude: /node_modules/ }
-
+    }
 ]
-  },
-    lessLoader: {
-    lessPlugins: [
-      new Autoprefixer({
-        browsers: ['last 2 versions', "ie >= 10"]
-      })
-    ]
   },
   devServer: {
     contentBase: "./public",
     colors: true,
     historyApiFallback: true,
     inline: true
-  },
+  }/*,plugins:[
+    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.optimize.UglifyJsPlugin({mangle: true,
+      compress: {
+        warnings: false, // Suppress uglification warnings
+        pure_getters: true,
+        unsafe: true,
+        unsafe_comps: true,
+        screw_ie8: true
+      },
+      output: {
+        comments: false,
+      },
+      exclude: [/\.min\.js$/gi] // skip pre-minified libs
+    }),
+    new webpack.optimize.DedupePlugin(),
+    new webpack.NoErrorsPlugin(),
+    new CompressionPlugin({
+      asset: "[path].gz[query]",
+      algorithm: "gzip",
+      test: /\.js$|\.css$|\.html$/,
+      threshold: 10240,
+      minRatio: 0
+    }),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': '"production"'
+    })
+  ]*/
 }
 
 /*
@@ -61,7 +80,19 @@ if (process.env.NODE_ENV === 'production') {
   config.devtool = false;
   config.plugins = [
     new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.optimize.UglifyJsPlugin({comments: false}),
+    new webpack.optimize.UglifyJsPlugin({mangle: true,
+      compress: {
+        warnings: false, // Suppress uglification warnings
+        pure_getters: true,
+        unsafe: true,
+        unsafe_comps: true,
+        screw_ie8: true
+      },
+      output: {
+        comments: false,
+      },
+      exclude: [/\.min\.js$/gi] // skip pre-minified libs
+    }),
     new webpack.DefinePlugin({
       'process.env': {NODE_ENV: JSON.stringify('production')}
     })

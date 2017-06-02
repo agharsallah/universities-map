@@ -20,7 +20,7 @@ class MenuDrawer extends Component {
                 onClick={this.handleToggle.bind(this)}
                 />
                 <Drawer width={300} containerStyle={{top:80}} open={this.state.open}  onRequestChange={(open) => this.setState({open})}>
-                <AppBar title="Mexnu" onLeftIconButtonTouchTap={this.handleToggle.bind(this)} />
+                <AppBar title="Menu" onLeftIconButtonTouchTap={this.handleToggle.bind(this)} />
                 <div className="mb-30">&nbsp;</div>
                 <div style={{marginLeft:"2rem"}}>
                      <h3 className="widget-title"  >Filter by Marker</h3>
